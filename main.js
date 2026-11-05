@@ -18,6 +18,8 @@ const CITIES = {
 };
 
 // P1 부터 여기 아래에 씁니다.
+import { getForecast } from "./api.js";
+
 const form = document.querySelector("#run-form");
 const citySelect = document.querySelector("#city");
 const rainInput = document.querySelector("#rain-limit");
@@ -30,5 +32,14 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault(); // 폼 제출 시 페이지 새로 고침 방지
   const city = CITIES[citySelect.value]; // 선택한 도시 정보 가져오기
   statusEl.textContent = "Loading..."; // 상태 표시
-  console.log({ city }); // 선택한 도시 출력
+
+  try {
+    const forecast = await getForecast(city);
+    statusEl.className = ""; // 상태 클래스 초기화
+    statusEl.textContent = "";
+    console.log({ forecast }); // 예보 데이터 출력
+  } catch (error) {
+    statusEl.className = "error";
+    statusEl.textContent = `Could not load the forecast (${error.message})`;
+  }
 });
