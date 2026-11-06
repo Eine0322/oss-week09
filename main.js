@@ -19,7 +19,7 @@ const CITIES = {
 
 // P1 부터 여기 아래에 씁니다.
 import { getForecast } from "./api.js";
-import { toDays, isGoodDay, summarize } from "./logic.js";
+import { toDays, isGoodDay, summarize, reasons } from "./logic.js";
 
 const form = document.querySelector("#run-form");
 const citySelect = document.querySelector("#city");
@@ -75,6 +75,7 @@ function dayRow(day) {
     `${day.max}°`,
     `${day.wind} km/h`,
     `${day.rain}%`,
+    reasons(day, state.limits).join(", "),
   ]) {
     const td = document.createElement("td");
     td.textContent = text;
