@@ -54,7 +54,18 @@ form.addEventListener("submit", async (event) => {
     statusEl.className = "error";
     statusEl.textContent = `Could not load the forecast (${error.message})`;
   }
-  render();
+
+  // P5 기준을 바꾸면 바로 다시 그리기 (값 변경에 따라)
+  rainInput.addEventListener("input", () => {
+    state.limits.rain = Number(rainInput.value);
+    render();
+  });
+  windInput.addEventListener("input", () => {
+    state.limits.wind = Number(windInput.value);
+    render();
+  });
+
+  render(); // 데이터를 가져온 후 화면을 렌더링
 });
 
 function dayRow(day) {
